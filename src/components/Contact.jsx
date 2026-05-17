@@ -1,101 +1,126 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FiInfo, FiMail } from 'react-icons/fi';
+import { FaPhoneAlt, FaMapMarkerAlt, FaRegCommentDots } from 'react-icons/fa';
+import '../components/Contact.css';
 
 const Contact = () => {
+  // State untuk menyimpan data input form
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
 
+  // Handler saat input berubah
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  // Handler saat form dikirim (submit)
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! I will get back to you soon.');
+    console.log('Data yang dikirim:', formData);
+    alert('Message sent successfully!');
+    // Reset form setelah submit
     setFormData({ name: '', email: '', message: '' });
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   return (
-    <section id="contact" className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-          Get In Touch
-        </h2>
+    <div className="contact-page" id='contact'>
+      <div className="contact-container" data-aos="fade-up">
         
-        <div className="max-w-2xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-gray-700 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-gray-700 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="message" className="block text-gray-700 mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="5"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              ></textarea>
-            </div>
-            
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-            >
-              Send Message
-            </button>
-          </form>
+        {/* Header Section */}
+        <header className="contact-header">
+          <h1>Contact</h1>
+          <p>Please fill out the form below or reach me via email.</p>
+        </header>
+
+        {/* Main Content Section */}
+        <div className="contact-wrapper">
           
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-2">📧 john.doe@example.com</p>
-            <p className="text-gray-600 mb-2">📱 +1 (555) 123-4567</p>
-            <div className="flex justify-center space-x-4 mt-4">
-              <a href="#" className="text-gray-600 hover:text-blue-600">GitHub</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600">LinkedIn</a>
-              <a href="#" className="text-gray-600 hover:text-blue-600">Twitter</a>
+          {/* Left Side: Information */}
+          <div className="contact-info">
+            <h2><FiInfo className="title-icon" /> Information</h2>
+            
+            <div className="info-item">
+              <div className="info-icon"><FiMail /></div>
+              <div className="info-text">
+                <label>Email</label>
+                <p>faizabbsy@gmail.com</p>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon"><FaPhoneAlt /></div>
+              <div className="info-text">
+                <label>Phone</label>
+                <p>+62 81290054793</p>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon"><FaMapMarkerAlt /></div>
+              <div className="info-text">
+                <label>Address</label>
+                <p>Bogor, Indonesia</p>
+              </div>
             </div>
           </div>
+
+          {/* Right Side: Send a Message Form */}
+          <div className="contact-form-container">
+            <h2><FaRegCommentDots className="title-icon" /> Send a Message</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  placeholder="Your name" 
+                  value={formData.name}
+                  onChange={handleChange}
+                  required 
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  placeholder="email@example.com" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  required 
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="5" 
+                  placeholder="Write your message here..." 
+                  value={formData.message}
+                  onChange={handleChange}
+                  required 
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+          </div>
+
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
